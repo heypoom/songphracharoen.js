@@ -165,8 +165,8 @@ const defaultStyles = `
   }
 
 	#royal-splash-screen .container img {
-		max-height: 500px;
-    max-width: 100%;
+    max-height: 500px;
+		max-width: 100%;
 	}
 
   #royal-splash-screen h1 {
