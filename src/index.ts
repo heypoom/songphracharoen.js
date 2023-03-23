@@ -30,7 +30,7 @@ const DEFAULT_ENTER_SITE_TEXT = 'เข้าสู่เว็บไซต์'
 const backdropByTheme: Record<ThemeKey, string> = {
   sky: 'http://www.nso.go.th/sites/2014/_catalogs/masterpage/NSO1/img/12-08/bg3.png',
   yellow:
-    'https://www.parliament.go.th/intro_special_day/img/5dec/5dec52_3.png',
+    'https://www-live.pptvhd36.com/images/campaigns/coronation/bg-pc.jpg?1679566561-cdn',
 }
 
 function getBackdropUrl(options: Options) {
@@ -58,7 +58,10 @@ const defaultStyles = `
     align-items: center;
     justify-content: center;
     background: white;
+		background-size: cover;
     min-height: 100vh;
+
+		padding: 2em 2em;
   }
 
   #king-splash-screen h1 {
@@ -67,9 +70,31 @@ const defaultStyles = `
 		text-align: center;
   }
 
+	#king-splash-screen .button-container {
+		display: flex;
+		justify-content: center
+		flex-wrap: wrap;
+		gap: 1em;
+	}
+
+	@media (max-width: 480px) {
+		#king-splash-screen h1 {
+			font-size: 1.5em;
+		}
+
+		#king-splash-screen .button-container {
+			flex-direction: column;
+		}
+	}
+
   #king-splash-screen button {
+		cursor: pointer;
     background: #f6e58d;
+		font-size: 1.2em;
 		font-family: 'Sarabun', sans-serif;
+		border: none;
+		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+		padding: 0.3em 1em;
   }
 `
 
@@ -107,8 +132,10 @@ function createKingSplashScreen(options: Options = {}) {
 		<div class="container" style="background-image: url('${backdropUrl}')">
 			<h1 class="message">${message}</h1>
 
-			${createSigningButton(options.signing)}
-			${createEnterSiteButton(options)}
+			<div class="button-container">
+				${createSigningButton(options.signing)}
+				${createEnterSiteButton(options)}
+			</div>
 
 			<style>
 				${defaultStyles}
