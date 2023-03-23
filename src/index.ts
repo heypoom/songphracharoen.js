@@ -6,7 +6,7 @@ type BackdropPreset = 'sky' | 'yellow'
 type Theme = ThemeKey | ThemeConfig
 
 interface Options {
-  /** Optons for the book signing (ลงนามถวายพระพร) */
+  /** Options for the book signing (ลงนามถวายพระพร) */
   signing?: SigningOption
 
   /** Name of the theme */
