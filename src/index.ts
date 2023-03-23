@@ -9,14 +9,15 @@ type SigningOption = boolean | {url: string}
 type ThemeKey = 'sky' | 'yellow'
 type BackdropPreset = 'sky' | 'yellow' | 'blue'
 
-type Theme = ThemeKey | ThemeConfig
-
 interface Options {
   /** Options for the book signing (ลงนามถวายพระพร) */
   signing?: SigningOption
 
-  /** Theme name or theme configuration */
-  theme?: Theme
+  /** Base theme. */
+  theme?: ThemeKey
+
+  /** Theme overrides. */
+  themeSettings?: ThemeConfig
 
   /** The default language */
   language?: Language
@@ -35,6 +36,8 @@ export type RoyalSplashScreenOptions = Options
 
 interface ThemeConfig {
   backdrop: BackdropPreset | {url: string}
+
+  heroImageUrl: string
 
   primaryBtn: {
     bg: string
@@ -84,9 +87,18 @@ const backdropByPreset: Record<BackdropPreset, string> = {
   blue: 'https://i.pinimg.com/originals/4f/09/22/4f092248497eb1b89b2d83020d4621ed.jpg',
 }
 
+const heroImages = {
+  queen99:
+    'http://www.nso.go.th/sites/2014/_catalogs/masterpage/NSO1/img/12-08/pic_Queen999.png',
+  tpjr1:
+    'http://www.nso.go.th/sites/2014/_catalogs/masterpage/NSO1/img/12-08/text12-8.png',
+  oBasic: 'http://www.srinonngam.go.th/upload/images/20190205070854.jpg',
+}
+
 const themes: Record<ThemeKey, ThemeConfig> = {
   sky: {
     backdrop: 'sky',
+    heroImageUrl: heroImages.tpjr1,
     primaryBtn: {
       bg: '#007bff',
       color: 'white',
@@ -98,6 +110,7 @@ const themes: Record<ThemeKey, ThemeConfig> = {
   },
   yellow: {
     backdrop: 'yellow',
+    heroImageUrl: heroImages.oBasic,
     primaryBtn: {
       bg: '#f6e58d',
       color: 'black',
@@ -109,12 +122,10 @@ const themes: Record<ThemeKey, ThemeConfig> = {
   },
 }
 
-function getTheme(options: Options): ThemeConfig {
-  // Get the theme configuration from the theme name.
-  if (typeof options.theme === 'string') return themes[options.theme]
-
-  return options.theme ?? themes[DEFAULT_THEME]
-}
+const getTheme = (options: Options): ThemeConfig => ({
+  ...themes[options.theme ?? DEFAULT_THEME],
+  ...options.themeSettings,
+})
 
 function getBackdropUrl(options: Options): string {
   const theme = getTheme(options)
@@ -227,6 +238,8 @@ function createRoyalSplashScreen(options: Options = {}) {
 
   container.innerHTML = `
 		<div class="container" style="background-image: url('${backdropUrl}')">
+			<img src="${theme.heroImageUrl}" alt="hero image">
+
 			<h1 class="message">${wishMessage}</h1>
 
 			<div class="button-container">
