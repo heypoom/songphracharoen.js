@@ -20,6 +20,7 @@ module.exports = {
       compilerOptions: {
         lib: ['es5', 'es6', 'dom'],
         target: 'es5',
+        importHelpers: false,
       },
     }),
   ],
