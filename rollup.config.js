@@ -8,7 +8,7 @@ module.exports = {
   output: [
     {
       format: 'umd',
-      file: 'dist/king.js',
+      file: 'dist/index.js',
     },
   ],
   plugins: [
