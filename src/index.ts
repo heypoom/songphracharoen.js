@@ -150,6 +150,12 @@ const defaultStyles = `
   }
 `
 
+const mourningStyle = `
+#king-splash-screen * {
+	filter: grayscale(100%);
+}
+`
+
 function createSigningButton(options: Options) {
   const {signing} = options
   const signingEnabled = !!signing
@@ -194,6 +200,7 @@ function createKingSplashScreen(options: Options = {}) {
 
 			<style>
 				${defaultStyles}
+				${options.mourning ? mourningStyle : ''}
 			</style>
 		</div>
 	`
