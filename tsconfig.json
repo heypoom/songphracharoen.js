@@ -2,8 +2,12 @@
   "include": ["src"],
   "exclude": ["dist"],
   "compilerOptions": {
-    "outDir": "dist",
+    "lib": ["es5", "es6", "dom"],
+    "target": "es5",
+    "importHelpers": false,
     "declaration": true,
-    "declarationDir": "."
+    "declarationDir": "dts",
+    "noEmit": false,
+    "emitDeclarationOnly": true
   }
 }

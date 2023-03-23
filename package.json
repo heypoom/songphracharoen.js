@@ -1,6 +1,6 @@
 {
   "name": "songphracharoen",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,5 +11,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "rollup-plugin-dts": "^5.3.0"
+  }
 }
