@@ -208,6 +208,13 @@ function createKingSplashScreen(options: Options = {}) {
 			<style>
 				${defaultStyles}
 				${options.mourning ? mourningStyle : ''}
+
+
+				#king-splash-screen button:hover {
+					background: #f9ca24;
+					scale: 1.05;
+					transition: 0.2s ease-in-out all;
+				}
 			</style>
 		</div>
 	`
