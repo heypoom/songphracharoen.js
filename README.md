@@ -14,7 +14,7 @@ Add the following script tag to use SongPhraCharoen.js
 <script src="//www.unpkg.com/songphracharoen@1.2.0/dist/index.js"></script>
 ```
 
-### Usage with NPM
+### Install via NPM
 
 You can also install the package using `npm` or `yarn` if needed.
 
@@ -32,21 +32,25 @@ Then, import the package in your JavaScript file.
 import 'songphracharoen'
 ```
 
-### Configuration
+### How to customize?
 
 Refer to the exported `KingSplashScreenOptions` type for the up-to-date configuration options.
 
-For example:
+For example, you can customize whether to enable book signing, the language, and the themes using the below configuration.
 
 ```html
 <script>
-  // Enables the book signing button (ลงนามถวายพระพร)
-  window.KingSplashScreenOptions.signing = true
+  window.KingSplashScreenOptions = {
+    // Enables the book signing button (ลงนามถวายพระพร)
+    signing: true,
 
-  // Use the english language as the default language.
-  window.KingSplashScreenOptions.language = 'en'
+    // Uses the "blue" theme instead.
+    theme: 'sky',
 
-  // Uses the "blue" theme instead.
-  window.KingSplashScreenOptions.theme = 'blue'
+    // Use the english language as the default language.
+    language: 'en',
+  }
 </script>
 ```
+
+![demo of usage with simple customization](./docs/assets/sample-2.png)
