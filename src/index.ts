@@ -20,6 +20,9 @@ interface Options {
 
   /** Button for the "Enter Site" button. */
   messages?: Partial<Record<LocaleKeys, string>>
+
+  /** Applies a greyscale filter with a grey theme if the king is deceased. */
+  deceased?: boolean
 }
 
 interface ThemeConfig {
