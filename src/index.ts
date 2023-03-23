@@ -1,7 +1,7 @@
 type SigningOption = boolean | {url: string}
 
 type ThemeKey = 'sky' | 'yellow'
-type BackdropPreset = 'sky' | 'yellow'
+type BackdropPreset = 'sky' | 'yellow' | 'blue'
 
 type Theme = ThemeKey | ThemeConfig
 
@@ -68,10 +68,11 @@ const backdropByPreset: Record<BackdropPreset, string> = {
   sky: 'http://www.nso.go.th/sites/2014/_catalogs/masterpage/NSO1/img/12-08/bg3.png',
   yellow:
     'https://www-live.pptvhd36.com/images/campaigns/coronation/bg-pc.jpg?1679566561-cdn',
+  blue: 'https://i.pinimg.com/originals/4f/09/22/4f092248497eb1b89b2d83020d4621ed.jpg',
 }
 
 const defaultBackdropByTheme: Record<ThemeKey, BackdropPreset> = {
-  sky: 'sky',
+  sky: 'blue',
   yellow: 'yellow',
 }
 
