@@ -1,10 +1,14 @@
 # ทรงพระเจริญ.js (SongPhraCharoen.js)
 
-เพิ่มหน้า "ทรงพระเจริญ" เข้าไปในเว็บคุณภายใน 1 นาที โดยไม่ต้องเขียนโค้ดเพิ่ม ลดเวลาพัฒนาเว็บของนักพัฒนารัฐบาลให้ไปทำอะไรที่มีประโยชน์กว่านี้
+เพิ่มหน้า "ทรงพระเจริญ" เข้าไปในเว็บคุณภายใน 1 นาที โดยไม่ต้องเขียนโค้ดเพิ่ม ลดเวลาพัฒนาเว็บของนักพัฒนารัฐบาลให้ไปทำอะไรที่มีประโยชน์กว่านี้ให้ประชาชน จะได้คุ้มภาษีหน่อย
 
-Easily add Song Phra Charoen splash screen and save thousands of government web developer's time to do more useful things
+Easily add Song Phra Charoen splash screen and save thousands of government web developer's time to do more useful things for the people.
 
 ![sample image](./docs/assets/sample-1.png)
+
+### Demo
+
+See the demo in action at [heypoom.github.io/songphracharoen.js](https://heypoom.github.io/songphracharoen.js). The demo uses the latest version of songphracharoen.js.
 
 ### Quick Start
 
