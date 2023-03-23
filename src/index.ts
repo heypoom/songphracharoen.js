@@ -9,7 +9,7 @@ interface Options {
   /** Options for the book signing (ลงนามถวายพระพร) */
   signing?: SigningOption
 
-  /** Name of the theme */
+  /** Theme name or theme configuration */
   theme?: Theme
 
   /** The default language */
@@ -71,20 +71,27 @@ const backdropByPreset: Record<BackdropPreset, string> = {
   blue: 'https://i.pinimg.com/originals/4f/09/22/4f092248497eb1b89b2d83020d4621ed.jpg',
 }
 
-const defaultBackdropByTheme: Record<ThemeKey, BackdropPreset> = {
-  sky: 'blue',
-  yellow: 'yellow',
+const themes: Record<ThemeKey, ThemeConfig> = {
+  sky: {
+    backdrop: 'sky',
+  },
+  yellow: {
+    backdrop: 'yellow',
+  },
 }
 
-const getThemeBackdropUrl = (theme: ThemeKey = DEFAULT_THEME) =>
-  backdropByPreset[defaultBackdropByTheme[theme]]
+function getTheme(options: Options): ThemeConfig {
+  // Get the theme configuration from the theme name.
+  if (typeof options.theme === 'string') return themes[options.theme]
 
-function getBackdropUrl({theme = DEFAULT_THEME}: Options): string {
-  // Use the default backdrop from the theme.
-  if (typeof theme === 'string') return getThemeBackdropUrl(theme)
+  return options.theme ?? themes[DEFAULT_THEME]
+}
 
-  // Use the backdrop from the preset.
-  if (typeof theme?.backdrop === 'string')
+function getBackdropUrl(options: Options): string {
+  const theme = getTheme(options)
+
+  // Use the backdrop from the theme.
+  if (typeof theme.backdrop === 'string')
     return backdropByPreset[theme.backdrop]
 
   // Use the backdrop from the url.
