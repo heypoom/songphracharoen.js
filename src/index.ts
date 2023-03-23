@@ -1,44 +1,92 @@
 type SigningOption = boolean | {url: string}
 
+type ThemeKey = 'sky' | 'yellow'
+type BackdropPreset = 'sky' | 'yellow'
+
+type Theme = ThemeKey | ThemeConfig
+
 interface Options {
-  /** ลงนามถวายพระพร */
+  /** Optons for the book signing (ลงนามถวายพระพร) */
   signing?: SigningOption
 
-  /** ชื่อ theme */
-  theme?: ThemeKey
+  /** Name of the theme */
+  theme?: Theme
 
-  /** จะ redirect ไปหน้าใหม่ไหม ถ้าไม่ redirect จะแค่ปิด overlay */
+  /** The default language */
+  language?: Language
+
+  /** The button closes the overlay by default. If the redirect url is set, it redirects to that page instead. */
   redirectUrl?: string
 
-  /** ข้อความปุ่มเข้าสู่เว็บไซต์ */
-  enterSiteText?: string
+  /** Button for the "Enter Site" button. */
+  messages?: Partial<Record<LocaleKeys, string>>
+}
 
-  /** พื้นหลังเว็บไซต์ */
-  backdropUrl?: string
+interface ThemeConfig {
+  /** override พื้นหลังเว็บไซต์ */
+  backdrop?: BackdropPreset | {url: string}
 }
 
 interface Window {
   KingSplashScreenOptions: Options
 }
 
-type ThemeKey = 'sky' | 'yellow'
+type Language = 'en' | 'th'
 
 const DEFAULT_THEME: ThemeKey = 'yellow'
 const DEFAULT_SIGNING_URL = 'https://wellwishes.royaloffice.th'
-const DEFAULT_ENTER_SITE_TEXT = 'เข้าสู่เว็บไซต์'
+const DEFAULT_LANGUAGE: Language = 'th'
 
-const backdropByTheme: Record<ThemeKey, string> = {
+type LocaleKeys = 'enterSiteBtn' | 'signBtn' | 'wishMessage'
+type Translations = Record<LocaleKeys, Record<Language, string>>
+
+const defaultTranslations: Translations = {
+  wishMessage: {
+    en: 'Long Live the King',
+    th: 'ขอพระองค์ทรงพระเจริญ',
+  },
+  enterSiteBtn: {
+    en: 'Enter Site',
+    th: 'เข้าสู่เว็บไซต์',
+  },
+  signBtn: {
+    en: 'Sign a congratulatory book',
+    th: 'ลงนามถวายพระพร',
+  },
+}
+
+function locale(key: LocaleKeys, options: Options) {
+  const language = options.language ?? DEFAULT_LANGUAGE
+
+  return options.messages?.[key] ?? defaultTranslations[key][language]
+}
+
+const backdropByPreset: Record<BackdropPreset, string> = {
   sky: 'http://www.nso.go.th/sites/2014/_catalogs/masterpage/NSO1/img/12-08/bg3.png',
   yellow:
     'https://www-live.pptvhd36.com/images/campaigns/coronation/bg-pc.jpg?1679566561-cdn',
 }
 
-function getBackdropUrl(options: Options) {
-  // ถ้า backdrop override ไว้ให้ใช้ backdrop ที่กำหนด
-  if (typeof options.backdropUrl === 'string') return options.backdropUrl
+const defaultBackdropByTheme: Record<ThemeKey, BackdropPreset> = {
+  sky: 'sky',
+  yellow: 'yellow',
+}
 
-  // ถ้าไม่มี backdrop ให้ใช้มาจาก theme
-  return backdropByTheme[options.theme || DEFAULT_THEME]
+const getThemeBackdropUrl = (theme: ThemeKey = DEFAULT_THEME) =>
+  backdropByPreset[defaultBackdropByTheme[theme]]
+
+function getBackdropUrl({theme = DEFAULT_THEME}: Options): string {
+  // Use the default backdrop from the theme.
+  if (typeof theme === 'string') return getThemeBackdropUrl(theme)
+
+  // Use the backdrop from the preset.
+  if (typeof theme?.backdrop === 'string')
+    return backdropByPreset[theme.backdrop]
+
+  // Use the backdrop from the url.
+  if (theme?.backdrop?.url) return theme.backdrop.url
+
+  throw new Error('invalid theme configuration')
 }
 
 const defaultStyles = `
@@ -98,7 +146,8 @@ const defaultStyles = `
   }
 `
 
-function createSigningButton(signing?: SigningOption) {
+function createSigningButton(options: Options) {
+  const {signing} = options
   const signingEnabled = !!signing
 
   const signingUrl: string =
@@ -106,17 +155,19 @@ function createSigningButton(signing?: SigningOption) {
       ? signing.url
       : DEFAULT_SIGNING_URL
 
-  const signingEl = `<a href="${signingUrl}" target="_blank"><button>ลงนามถวายพระพร</button></a>`
+  const signingEl = `<a href="${signingUrl}" target="_blank">
+		<button>${locale('signBtn', options)}</button>
+	</a>`
 
   return signingEnabled ? signingEl : ''
 }
 
 function createEnterSiteButton(options: Options) {
   const shouldRedirect = !!options.redirectUrl
-  const enterSiteText = options.enterSiteText ?? DEFAULT_ENTER_SITE_TEXT
+  const enterSiteMsg = locale('enterSiteBtn', options)
 
-  const closeOverlayEl = `<button class="enter-website" onclick="document.getElementById('king-splash-screen').remove()">${enterSiteText}</button>`
-  const redirectEl = `<a href="${options.redirectUrl}"><button class="enter-website">${enterSiteText}</button></a>`
+  const closeOverlayEl = `<button class="enter-website" onclick="document.getElementById('king-splash-screen').remove()">${enterSiteMsg}</button>`
+  const redirectEl = `<a href="${options.redirectUrl}"><button class="enter-website">${enterSiteMsg}</button></a>`
 
   return shouldRedirect ? redirectEl : closeOverlayEl
 }
@@ -125,16 +176,15 @@ function createKingSplashScreen(options: Options = {}) {
   const container = document.createElement('div')
   container.id = 'king-splash-screen'
 
-  const message = `ขอพระองค์ทรงพระเจริญ`
-
+  const wishMessage = locale('wishMessage', options)
   const backdropUrl = getBackdropUrl(options)
 
   container.innerHTML = `
 		<div class="container" style="background-image: url('${backdropUrl}')">
-			<h1 class="message">${message}</h1>
+			<h1 class="message">${wishMessage}</h1>
 
 			<div class="button-container">
-				${createSigningButton(options.signing)}
+				${createSigningButton(options)}
 				${createEnterSiteButton(options)}
 			</div>
 
