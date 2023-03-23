@@ -26,8 +26,17 @@ interface Options {
 }
 
 interface ThemeConfig {
-  /** override พื้นหลังเว็บไซต์ */
-  backdrop?: BackdropPreset | {url: string}
+  backdrop: BackdropPreset | {url: string}
+
+  primaryBtn: {
+    bg: string
+    color: string
+
+    hover: {
+      bg: string
+      color: string
+    }
+  }
 }
 
 interface Window {
@@ -74,9 +83,25 @@ const backdropByPreset: Record<BackdropPreset, string> = {
 const themes: Record<ThemeKey, ThemeConfig> = {
   sky: {
     backdrop: 'sky',
+    primaryBtn: {
+      bg: '#007bff',
+      color: 'white',
+      hover: {
+        bg: '#0069d9',
+        color: 'white',
+      },
+    },
   },
   yellow: {
     backdrop: 'yellow',
+    primaryBtn: {
+      bg: '#f6e58d',
+      color: 'black',
+      hover: {
+        bg: '#f9ca24',
+        color: 'black',
+      },
+    },
   },
 }
 
@@ -148,7 +173,6 @@ const defaultStyles = `
 
   #king-splash-screen button {
 		cursor: pointer;
-    background: #f6e58d;
 		font-size: 1.2em;
 		font-family: 'Sarabun', sans-serif;
 		border: none;
@@ -195,6 +219,7 @@ function createKingSplashScreen(options: Options = {}) {
 
   const wishMessage = locale('wishMessage', options)
   const backdropUrl = getBackdropUrl(options)
+  const theme = getTheme(options)
 
   container.innerHTML = `
 		<div class="container" style="background-image: url('${backdropUrl}')">
@@ -209,9 +234,14 @@ function createKingSplashScreen(options: Options = {}) {
 				${defaultStyles}
 				${options.mourning ? mourningStyle : ''}
 
+				#king-splash-screen button {
+					color: ${theme.primaryBtn?.color};
+					background: ${theme.primaryBtn?.bg};
+				}
 
 				#king-splash-screen button:hover {
-					background: #f9ca24;
+					color: ${theme.primaryBtn?.hover?.color};
+					background: ${theme.primaryBtn?.hover?.bg};
 					scale: 1.05;
 					transition: 0.2s ease-in-out all;
 				}
