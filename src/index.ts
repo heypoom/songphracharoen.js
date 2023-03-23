@@ -116,8 +116,9 @@ function createEnterSiteButton(options: Options) {
   const enterSiteText = options.enterSiteText ?? DEFAULT_ENTER_SITE_TEXT
 
   const closeOverlayEl = `<button class="enter-website" onclick="document.getElementById('king-splash-screen').remove()">${enterSiteText}</button>`
+  const redirectEl = `<a href="${options.redirectUrl}"><button class="enter-website">${enterSiteText}</button></a>`
 
-  return shouldRedirect ? `` : closeOverlayEl
+  return shouldRedirect ? redirectEl : closeOverlayEl
 }
 
 function createKingSplashScreen(options: Options = {}) {
