@@ -15,7 +15,7 @@ See the demo in action at [heypoom.github.io/songphracharoen.js](https://heypoom
 Add the following script tag to use SongPhraCharoen.js
 
 ```html
-<script src="//www.unpkg.com/songphracharoen@1.2.0/dist/index.js"></script>
+<script src="//www.unpkg.com/songphracharoen/dist/index.js"></script>
 ```
 
 ### Install via NPM
