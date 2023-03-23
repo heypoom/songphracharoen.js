@@ -38,13 +38,13 @@ import 'songphracharoen'
 
 ### How to customize?
 
-Refer to the exported `KingSplashScreenOptions` type for the up-to-date configuration options.
+Refer to the exported `RoyalSplashScreenOptions` type for the up-to-date configuration options.
 
 For example, you can customize whether to enable book signing, the language, and the themes using the below configuration.
 
 ```html
 <script>
-  window.KingSplashScreenOptions = {
+  window.RoyalSplashScreenOptions = {
     // Enables the book signing button (ลงนามถวายพระพร)
     signing: true,
 

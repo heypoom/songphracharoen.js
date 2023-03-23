@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    KingSplashScreenOptions: Options
+    RoyalSplashScreenOptions: Options
   }
 }
 
@@ -27,11 +27,11 @@ interface Options {
   /** Button for the "Enter Site" button. */
   messages?: Partial<Record<LocaleKeys, string>>
 
-  /** Applies a greyscale filter with a grey theme to mourn the deceased king or royal family. */
+  /** Applies a greyscale filter with a grey theme to mourn the deceased royal family member. */
   mourning?: boolean
 }
 
-export type KingSplashScreenOptions = Options
+export type RoyalSplashScreenOptions = Options
 
 interface ThemeConfig {
   backdrop: BackdropPreset | {url: string}
@@ -130,7 +130,7 @@ function getBackdropUrl(options: Options): string {
 }
 
 const defaultStyles = `
-  #king-splash-screen {
+  #royal-splash-screen {
     position: fixed;
     width: 100%;
     top: 0;
@@ -140,7 +140,7 @@ const defaultStyles = `
 		font-family: 'Sarabun', sans-serif;
   }
 
-  #king-splash-screen .container {
+  #royal-splash-screen .container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -152,13 +152,13 @@ const defaultStyles = `
 		padding: 2em 2em;
   }
 
-  #king-splash-screen h1 {
+  #royal-splash-screen h1 {
 		font-family: 'Sarabun', sans-serif;
 		font-size: 3em;
 		text-align: center;
   }
 
-	#king-splash-screen .button-container {
+	#royal-splash-screen .button-container {
 		display: flex;
 		justify-content: center
 		flex-wrap: wrap;
@@ -166,16 +166,16 @@ const defaultStyles = `
 	}
 
 	@media (max-width: 480px) {
-		#king-splash-screen h1 {
+		#royal-splash-screen h1 {
 			font-size: 1.5em;
 		}
 
-		#king-splash-screen .button-container {
+		#royal-splash-screen .button-container {
 			flex-direction: column;
 		}
 	}
 
-  #king-splash-screen button {
+  #royal-splash-screen button {
 		cursor: pointer;
 		font-size: 1.2em;
 		font-family: 'Sarabun', sans-serif;
@@ -186,7 +186,7 @@ const defaultStyles = `
 `
 
 const mourningStyle = `
-#king-splash-screen * {
+#royal-splash-screen * {
 	filter: grayscale(100%);
 }
 `
@@ -211,15 +211,15 @@ function createEnterSiteButton(options: Options) {
   const shouldRedirect = !!options.redirectUrl
   const enterSiteMsg = locale('enterSiteBtn', options)
 
-  const closeOverlayEl = `<button class="enter-website" onclick="document.getElementById('king-splash-screen').remove()">${enterSiteMsg}</button>`
+  const closeOverlayEl = `<button class="enter-website" onclick="document.getElementById('royal-splash-screen').remove()">${enterSiteMsg}</button>`
   const redirectEl = `<a href="${options.redirectUrl}"><button class="enter-website">${enterSiteMsg}</button></a>`
 
   return shouldRedirect ? redirectEl : closeOverlayEl
 }
 
-function createKingSplashScreen(options: Options = {}) {
+function createRoyalSplashScreen(options: Options = {}) {
   const container = document.createElement('div')
-  container.id = 'king-splash-screen'
+  container.id = 'royal-splash-screen'
 
   const wishMessage = locale('wishMessage', options)
   const backdropUrl = getBackdropUrl(options)
@@ -238,12 +238,12 @@ function createKingSplashScreen(options: Options = {}) {
 				${defaultStyles}
 				${options.mourning ? mourningStyle : ''}
 
-				#king-splash-screen button {
+				#royal-splash-screen button {
 					color: ${theme.primaryBtn?.color};
 					background: ${theme.primaryBtn?.bg};
 				}
 
-				#king-splash-screen button:hover {
+				#royal-splash-screen button:hover {
 					color: ${theme.primaryBtn?.hover?.color};
 					background: ${theme.primaryBtn?.hover?.bg};
 					scale: 1.05;
@@ -257,14 +257,14 @@ function createKingSplashScreen(options: Options = {}) {
 }
 
 if (typeof window !== 'undefined') {
-  window.KingSplashScreenOptions = {
+  window.RoyalSplashScreenOptions = {
     signing: false,
   }
 }
 
 // Run the createSplashScreen function once the DOM element is mounted.
 document.addEventListener('DOMContentLoaded', () => {
-  const options = window.KingSplashScreenOptions || {}
+  const options = window.RoyalSplashScreenOptions || {}
 
-  createKingSplashScreen(options)
+  createRoyalSplashScreen(options)
 })
