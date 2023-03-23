@@ -93,6 +93,7 @@ const heroImages = {
   tpjr1:
     'http://www.nso.go.th/sites/2014/_catalogs/masterpage/NSO1/img/12-08/text12-8.png',
   oBasic: 'http://www.srinonngam.go.th/upload/images/20190205070854.jpg',
+  oTall: 'https://bizid.egov.go.th/CoverPage/images/intro-king-10-02.jpg',
 }
 
 const themes: Record<ThemeKey, ThemeConfig> = {
@@ -110,7 +111,7 @@ const themes: Record<ThemeKey, ThemeConfig> = {
   },
   yellow: {
     backdrop: 'yellow',
-    heroImageUrl: heroImages.oBasic,
+    heroImageUrl: heroImages.oTall,
     primaryBtn: {
       bg: '#f6e58d',
       color: 'black',
@@ -162,6 +163,11 @@ const defaultStyles = `
 
 		padding: 2em 2em;
   }
+
+	#royal-splash-screen .container img {
+		max-height: 500px;
+    max-width: 100%;
+	}
 
   #royal-splash-screen h1 {
 		font-family: 'Sarabun', sans-serif;
