@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    KingSplashScreenOptions: Options
+  }
+}
+
 type SigningOption = boolean | {url: string}
 
 type ThemeKey = 'sky' | 'yellow'
@@ -25,6 +31,8 @@ interface Options {
   mourning?: boolean
 }
 
+export type KingSplashScreenOptions = Options
+
 interface ThemeConfig {
   backdrop: BackdropPreset | {url: string}
 
@@ -37,10 +45,6 @@ interface ThemeConfig {
       color: string
     }
   }
-}
-
-interface Window {
-  KingSplashScreenOptions: Options
 }
 
 type Language = 'en' | 'th'
